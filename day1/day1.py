@@ -9,7 +9,7 @@ def data_load()->list:
 		if isinstance(arr[x], int):
 			curr_row.append(arr[x])
 			if x + 1 == len(arr) and len(curr_row) > 0:
-				split_arr.append(list(curr_row))	
+				split_arr.append(list(curr_row))
 		elif isinstance(arr[x], str):
 			split_arr.append(list(curr_row))
 			curr_row = []
