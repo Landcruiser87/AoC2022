@@ -1,0 +1,9 @@
+# History/env files
+\.vscode*
+\.pytest_cache*
+
+*__pycache__*
+\.aoc_venv*
+
+\scrap*
+
