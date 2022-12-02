@@ -44,33 +44,20 @@ def data_load()->list:
 		data = f.read().splitlines()
 		arr = [(line.split(" ")[0], line.split(" ")[1]) for line in data]
 	return arr
-
+	#Notes
 	#Want to load the data as......
 	# list of tuples??? Makes some sense.
 
 def calc_score_partA(arr)->int:
-
 	player2_dict = {
 		"X":"rock",
 		"Y":"paper",
 		"Z":"scissors"
 		}
-	#TODO refactor without the g_round counter, 
-	# change iteration loop from 3 steps to 1.
 	your_score = 0
-	for game in range(0, len(arr), 3): 
-		g_round = 0
-		while g_round < 3: #Dont' really need this 3 limiter loop.  Can just do single iteration
-							#I thought i needed to track rounds of 3 games for scoring
-			if game + g_round == len(arr)-1:
-				#Final Match
-				outcome = game_dict[player2_dict[arr[game+g_round][1]], player1_dict[arr[game+g_round][0]]]
-				your_score += shape_score_dict[player2_dict[arr[game+g_round][1]]] + outcome_dict[outcome]
-				break
-
-			outcome = game_dict[player2_dict[arr[game+g_round][1]], player1_dict[arr[game+g_round][0]]]
-			your_score += shape_score_dict[player2_dict[arr[game+g_round][1]]] + outcome_dict[outcome]
-			g_round += 1
+	for game in range(0, len(arr)): 
+			outcome = game_dict[player2_dict[arr[game][1]], player1_dict[arr[game][0]]]
+			your_score += shape_score_dict[player2_dict[arr[game][1]]] + outcome_dict[outcome]
 
 	return your_score
 	
@@ -82,28 +69,14 @@ def calc_score_partB(arr)->int:
 	}
 
 	your_score = 0
-	for game in range(0, len(arr), 3): 
-		g_round = 0
-		while g_round < 3:
-			if game + g_round == len(arr)-1:
-				#Final Match
-				outcome = player2_dict[arr[game + g_round][1]]
-				player1_play = player1_dict[arr[game + g_round][0]]
-				mini_dict = {k:v for k, v in game_dict.items() if v == outcome and k[1] == player1_play}
-				player2_play = list(mini_dict.keys())[0][0]
-				your_score += shape_score_dict[player2_play] + outcome_dict[outcome]
-				break
-
-			outcome = player2_dict[arr[game + g_round][1]]
-			player1_play = player1_dict[arr[game + g_round][0]]
+	for game in range(0, len(arr)): 
+			outcome = player2_dict[arr[game][1]]
+			player1_play = player1_dict[arr[game][0]]
 			mini_dict = {k:v for k, v in game_dict.items() if v == outcome and k[1] == player1_play}
 			player2_play = list(mini_dict.keys())[0][0]
 			your_score += shape_score_dict[player2_play] + outcome_dict[outcome]
-			g_round += 1
 
 	return your_score
-
-
 
 @log_time
 def run_part_A():
