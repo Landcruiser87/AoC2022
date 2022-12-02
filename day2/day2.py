@@ -94,14 +94,13 @@ print(f"Part A solution: \n{run_part_A()}\n")
 print(f"Part B solution: \n{run_part_B()}\n")
 
 #Part A Notes
-#Each game is 3 plays (lines in the text). 
-#This is a strategy guide of you vs all the elfs in a tourny
+#Input is a strategy guide of you vs all the other elfs in a tourny
 #Total score per line
 	# (What hand you played + outcome of round (win/loss/draw))
 
 #Gameplan
 	#1. Make a list of tuples. 
-	#2. Iterate said list in steps of 3 (game length)
+	#2. Iterate said list
 	#3. Calc outcome of game and add to your total tally (point of exercise)
 
 #Part B Notes
