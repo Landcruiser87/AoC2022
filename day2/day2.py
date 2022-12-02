@@ -42,7 +42,7 @@ def data_load()->list:
 	# ./day2/
 	with open('./day2/data.txt', 'r') as f:
 		data = f.read().splitlines()
-		arr = [(line.split(" ")[0], line.split(" ")[1]) for line in data]
+		arr = [tuple(line.split(" ")) for line in data]
 	return arr
 	#Notes
 	#Want to load the data as......
