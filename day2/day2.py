@@ -55,11 +55,13 @@ def calc_score_partA(arr)->int:
 		"Y":"paper",
 		"Z":"scissors"
 		}
-
+	#TODO refactor without the g_round counter, 
+	# change iteration loop from 3 steps to 1.
 	your_score = 0
 	for game in range(0, len(arr), 3): 
 		g_round = 0
-		while g_round < 3:
+		while g_round < 3: #Dont' really need this 3 limiter loop.  Can just do single iteration
+							#I thought i needed to track rounds of 3 games for scoring
 			if game + g_round == len(arr)-1:
 				#Final Match
 				outcome = game_dict[player2_dict[arr[game+g_round][1]], player1_dict[arr[game+g_round][0]]]

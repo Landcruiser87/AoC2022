@@ -6,11 +6,16 @@ def log_time(fn):
 		out = fn(*args, **kwargs)
 		te = time.time()
 		took = round(te - tnow, 2)
-		if took <= 60:
-			print(f"{fn.__name__} ran in {took:.2f}s")
+		
+		if took <= .001:
+			print(f"{fn.__name__} ran in {took*1_000_000:.3f} ns")
+		elif took <= 1:
+			print(f"{fn.__name__} ran in {took*1_000:.3f} ms")
+		elif took <= 60:
+			print(f"{fn.__name__} ran in {took:.2f} s")
 		elif took <= 3600:
-			print(f"{fn.__name__} ran in {(took)/60:.2f}m")		
+			print(f"{fn.__name__} ran in {(took)/60:.2f} m")		
 		else:
-			print(f"{fn.__name__} ran in {(took)/3600:.2f}h")
+			print(f"{fn.__name__} ran in {(took)/3600:.2f} h")
 		return out
 	return inner
