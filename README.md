@@ -4,6 +4,6 @@ These are my solutions for the [Advent of Code 2022](https://adventofcode.com/20
 
 
 ### Formatting TODO
-- Implement automatic import via requests
-- Make utils folder for various functions I'll use across days.
-- Get timer class running.
+- [ ] Implement automatic data import via requests
+- [x] Make utils folder for various functions I'll use across days.
+- [x] Get function timer running.
