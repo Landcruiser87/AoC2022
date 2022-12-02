@@ -1,3 +1,6 @@
+#Calorie Counting
+#Day 1
+
 import os
 import sys
 
@@ -5,14 +8,13 @@ root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__
 sys.path.append(root_folder)
 from utils.time_run import log_time
 
-
 def data_load()->list:
 	# ./day1/
 	with open('./day1/data.txt', 'r') as f:
 		data = f.read().splitlines()
 		arr = [int(x) if x != "" else "" for x in data]
+	
 	split_arr, curr_row = [], []
-
 	# Testing a faster cleaner way to do this. Not sure i like the solution i came up with.  Lol. 
 	# def split_list_on_space(empty_idx:list, arr:list):
 	# 	for x in range(len(arr)):
@@ -20,11 +22,8 @@ def data_load()->list:
 	# 			sub_list = arr[x:next(x, len(arr))]
 	# 			yield sub_list
 
-
 	# empty_idx = [idx for idx, value in enumerate(arr) if value == ""]
-	
 	# split_arr = list(split_list_on_space(empty_idx, arr))
-
 	# return split_arr
 
 	for x in range(len(arr)):
@@ -53,6 +52,4 @@ def run_part_B():
 	return sum(top3_calories)
 	
 print(f"Part A solution: \n{run_part_A()}\n")
-
 print(f"Part B solution: \n{run_part_B()}\n")
-
