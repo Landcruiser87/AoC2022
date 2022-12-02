@@ -8,7 +8,7 @@ from utils.time_run import log_time
 
 def data_load()->list:
 	# ./day1/
-	with open('./day1/test_data.txt', 'r') as f:
+	with open('./day1/data.txt', 'r') as f:
 		data = f.read().splitlines()
 		arr = [int(x) if x != "" else "" for x in data]
 	split_arr, curr_row = [], []
