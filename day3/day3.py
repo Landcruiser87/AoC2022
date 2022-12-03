@@ -38,7 +38,7 @@ def calc_part_B(arr:list):
 	total_sum = 0
 	#probably shouldn't have split them up in the dataload but ¯\_(ツ)_/¯
 	arr = ["".join([x[0], x[1]]) for x in arr]
-	#Make sure the total inputs remainder is zero
+	#Check the remainder of the length of the array divided by 3 is zero
 	assert len(arr) % 3 == 0
 	for x in range(0, len(arr), 3):
 		common_letter = "".join(set(arr[x]) & set(arr[x + 1]) & set(arr[x + 2]))
