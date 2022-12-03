@@ -8,10 +8,10 @@ sys.path.append(root_folder)
 from utils.time_run import log_time
 
 
-lower_letters = string.ascii_lowercase
-upper_letters = "".join([x.upper() for x in lower_letters])
-lower_dict = {letter:cnt+1 for cnt, letter in enumerate(lower_letters)}
-upper_dict = {letter:cnt+27 for cnt, letter in enumerate(upper_letters)}
+LOWER_LETTERS = string.ascii_lowercase
+UPPER_LETTERS = "".join([x.upper() for x in LOWER_LETTERS])
+LOWER_DICT = {letter:cnt+1 for cnt, letter in enumerate(LOWER_LETTERS)}
+UPPER_DICT = {letter:cnt+27 for cnt, letter in enumerate(UPPER_LETTERS)}
 
 
 def data_load()->list:
@@ -21,20 +21,20 @@ def data_load()->list:
 		arr = [(line[:len(line)//2], line[len(line)//2:]) for line in data]
 	return arr	
 
-def calc_part_A(arr:list):
+def calc_part_A(arr:list)->int:
 	total_sum = 0
 	for x in range(len(arr)):
 		common_letter = "".join(set(arr[x][0]) & set(arr[x][1]))
 		if common_letter.isupper():
-			total_sum += upper_dict[common_letter]
+			total_sum += UPPER_DICT[common_letter]
 		elif common_letter.islower():
-			total_sum += lower_dict[common_letter]
+			total_sum += LOWER_DICT[common_letter]
 		else:
 			raise ValueError(f'Your inputs whack.  Aka not a string')
 	
 	return total_sum
 
-def calc_part_B(arr:list):
+def calc_part_B(arr:list)->int:
 	total_sum = 0
 	#probably shouldn't have split them up in the dataload but ¯\_(ツ)_/¯
 	arr = ["".join([x[0], x[1]]) for x in arr]
@@ -43,9 +43,9 @@ def calc_part_B(arr:list):
 	for x in range(0, len(arr), 3):
 		common_letter = "".join(set(arr[x]) & set(arr[x + 1]) & set(arr[x + 2]))
 		if common_letter.isupper():
-			total_sum += upper_dict[common_letter]
+			total_sum += UPPER_DICT[common_letter]
 		elif common_letter.islower():
-			total_sum += lower_dict[common_letter]
+			total_sum += LOWER_DICT[common_letter]
 		else:
 			raise ValueError(f'Your inputs whack.  Aka not a string')
 	
@@ -55,14 +55,14 @@ def calc_part_B(arr:list):
 @log_time
 def run_part_A():
 	data = data_load()
-	count_sum = calc_part_A(data)
-	return count_sum
+	sack_sum = calc_part_A(data)
+	return sack_sum
 
 @log_time
 def run_part_B():
 	data = data_load()
-	count_sum = calc_part_B(data)
-	return count_sum
+	sack_sum = calc_part_B(data)
+	return sack_sum
 
 print(f"Part A solution: \n{run_part_A()}\n")
 print(f"Part B solution: \n{run_part_B()}\n")
