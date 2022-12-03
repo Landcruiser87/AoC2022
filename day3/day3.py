@@ -36,7 +36,7 @@ def calc_part_A(arr:list):
 
 def calc_part_B(arr:list):
 	total_sum = 0
-	#probably shouldn't have split them up in the dataload but meh. 
+	#probably shouldn't have split them up in the dataload but ¯\_(ツ)_/¯
 	arr = ["".join([x[0], x[1]]) for x in arr]
 	for x in range(0, len(arr), 3):
 		common_letter = "".join(set(arr[x]) & set(arr[x + 1]) & set(arr[x + 2]))
@@ -75,3 +75,6 @@ print(f"Part B solution: \n{run_part_B()}\n")
 
 #Do a set comparison between the two halves for the common letters. 
 #then add up their letter equivalents in the letter_dicts. 
+
+#Part B
+#Iterate in steps of 3 and do set comparisons between the groups of 3.
