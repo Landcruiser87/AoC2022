@@ -56,8 +56,8 @@ def calc_score_partA(arr)->int:
 		}
 	p2_score = 0
 	for game in range(len(arr)): 
-			outcome = game_dict[player2_dict[arr[game][1]], player1_dict[arr[game][0]]]
-			p2_score += shape_score_dict[player2_dict[arr[game][1]]] + outcome_dict[outcome]
+		outcome = game_dict[player2_dict[arr[game][1]], player1_dict[arr[game][0]]]
+		p2_score += shape_score_dict[player2_dict[arr[game][1]]] + outcome_dict[outcome]
 
 	return p2_score
 	
@@ -70,11 +70,11 @@ def calc_score_partB(arr)->int:
 
 	p2_score = 0
 	for game in range(len(arr)): 
-			outcome = player2_dict[arr[game][1]]
-			player1_play = player1_dict[arr[game][0]]
-			mini_dict = {k:v for k, v in game_dict.items() if v == outcome and k[1] == player1_play}
-			player2_play = list(mini_dict.keys())[0][0]
-			p2_score += shape_score_dict[player2_play] + outcome_dict[outcome]
+		outcome = player2_dict[arr[game][1]]
+		player1_play = player1_dict[arr[game][0]]
+		mini_dict = {k:v for k, v in game_dict.items() if v == outcome and k[1] == player1_play}
+		player2_play = list(mini_dict.keys())[0][0]
+		p2_score += shape_score_dict[player2_play] + outcome_dict[outcome]
 
 	return p2_score
 
