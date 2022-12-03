@@ -31,7 +31,6 @@ def calc_part_A(arr:list)->int:
 			total_sum += LOWER_DICT[common_letter]
 		else:
 			raise ValueError(f'Your inputs whack.  Aka not a string')
-	
 	return total_sum
 
 def calc_part_B(arr:list)->int:
@@ -48,7 +47,6 @@ def calc_part_B(arr:list)->int:
 			total_sum += LOWER_DICT[common_letter]
 		else:
 			raise ValueError(f'Your inputs whack.  Aka not a string')
-	
 	return total_sum
 
 
@@ -79,4 +77,5 @@ print(f"Part B solution: \n{run_part_B()}\n")
 #then add up their letter equivalents in the letter_dicts. 
 
 #Part B
+#Rejoin the tuples from data_load
 #Iterate in steps of 3 and do set comparisons between the groups of 3.
