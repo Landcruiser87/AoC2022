@@ -8,8 +8,8 @@ import requests
 
 #pull down the test data
 
-#Create a template file with the following in place. 
+#Copy template file into that day with the following framework
 	# sys file path add of utils.
 	# basic data load function
 	# two defs for run_part_A, run_part_B with skeleton code.
-	# 
+

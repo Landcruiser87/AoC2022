@@ -55,7 +55,7 @@ def calc_score_partA(arr)->int:
 		"Z":"scissors"
 		}
 	p2_score = 0
-	for game in range(0, len(arr)): 
+	for game in range(len(arr)): 
 			outcome = game_dict[player2_dict[arr[game][1]], player1_dict[arr[game][0]]]
 			p2_score += shape_score_dict[player2_dict[arr[game][1]]] + outcome_dict[outcome]
 
@@ -69,7 +69,7 @@ def calc_score_partB(arr)->int:
 	}
 
 	p2_score = 0
-	for game in range(0, len(arr)): 
+	for game in range(len(arr)): 
 			outcome = player2_dict[arr[game][1]]
 			player1_play = player1_dict[arr[game][0]]
 			mini_dict = {k:v for k, v in game_dict.items() if v == outcome and k[1] == player1_play}
@@ -107,11 +107,3 @@ print(f"Part B solution: \n{run_part_B()}\n")
 #Ok this drunk elf is out of his mind.  The second column is apparently the encoded
 #outcome for what should happen.  So you need to write a secondary function with the same loop
 #just different inputs.  Could code it into one scoring function, but easier to make it 2
-
-#Fix
-#reduce the game_dict to the only outcomes.  
-#Then you can select your play from the remaining key. 
-
-
-
-
