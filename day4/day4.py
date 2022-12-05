@@ -52,4 +52,8 @@ print(f"Part B solution: \n{run_part_B()}\n")
 #Goal 
 #Count the number of overlapping ranges in the pairs. 
 #Just need to test if one range is fully located iwthin another. 
+#Use set memberships, remember to increase the right range by 1
 
+#Part B
+#Same but now we're lookign for any commonality.  
+#Use set intersection as a boolean for counter.
