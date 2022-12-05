@@ -31,7 +31,6 @@ def data_load()->list:
 	
 def calc_part_A(cargo_dict, moves):
 	#Notes
-	#cargo map = zero indexed list of containers. 
 	#moves[0] = num of cargo to move
 	#moves[1] = where to move it from
 	#moves[2] = where to move it too
@@ -51,7 +50,6 @@ def calc_part_B(cargo_dict, moves):
 		#So we'll need to change the iteration.  
 		#Take out while loop
 
-	#cargo map = zero indexed list of containers. 
 	#moves[0] = num of cargo to move
 	#moves[1] = where to move it from
 	#moves[2] = where to move it too
