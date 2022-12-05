@@ -5,7 +5,7 @@ def log_time(fn):
 		tnow = time.time()
 		out = fn(*args, **kwargs)
 		te = time.time()
-		took = round(te - tnow, 2)
+		took = te - tnow
 		
 		if took <= .000_001:
 			print(f"{fn.__name__} ran in {took*1_000_000_000:.3f} ns")

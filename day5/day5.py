@@ -13,14 +13,14 @@ def data_load()->list:
 
 	cargo_map_str = cargo_map.pop()
 	#Make a dict of the string index of each cargo numbers label.
-	# key = what container
-	# val = string position of the number 
+	# key = label of container (the enumerate should correspond to the label)
+	# val = string position of the the label (ie-the letter position) 
 	cargo_pos_dict = {int(v):k for k, v in enumerate(cargo_map_str) if v.isdigit()}
 	#Make a dict of lists to hold the cargo manifest
 	cargo_dict = {k:[] for k in cargo_pos_dict.keys()}
 
 	#Loop through the maps and add each cargo to its correct bin. 
-		#NOTE: Uses thecargo_pos_dict to look up each letter in the string.
+		#NOTE: Uses the cargo_pos_dict to look up each letter in the string.
 	for row in range(len(cargo_map)):
 		for key, val in cargo_pos_dict.items():
 			if cargo_map[row][val].isalpha():
@@ -46,13 +46,13 @@ def calc_topcrates(cargo_dict:dict, moves:list, part:str):
 			while move[0] > 0:
 				cargo_dict[move[2]].insert(0, cargo_dict[move[1]].pop(0))
 				move[0] -= 1
+
 		if part == 'part_B':
 			containers = cargo_dict[move[1]][:move[0]]
 			del cargo_dict[move[1]][:move[0]]
 			[cargo_dict[move[2]].insert(0, x) for x in containers[::-1]]
 				
 	top_crates = "".join(cargo_dict[key][0] for key in cargo_dict.keys())
-	
 	return top_crates
 
 @log_time
