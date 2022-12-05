@@ -12,16 +12,22 @@ def data_load()->list:
 		cargo_map, moves = data[:data.index('')], data[data.index('')+1:]
 
 	cargo_map_str = cargo_map.pop()
-	#Make a dict of the index of each cargo letter. 
+	#Make a dict of the string index of each cargo numbers label.
+	# key = what container
+	# val = string position of the number 
 	cargo_pos_dict = {int(v):k for k, v in enumerate(cargo_map_str) if v.isdigit()}
-	#Make a dict of lists for containers. 
+	#Make a dict of lists to hold the cargo manifest
 	cargo_dict = {k:[] for k in cargo_pos_dict.keys()}
 
+	#Loop through the maps and add each cargo to its correct bin. 
+		#NOTE: Uses thecargo_pos_dict to look up each letter in the string.
 	for row in range(len(cargo_map)):
 		for key, val in cargo_pos_dict.items():
 			if cargo_map[row][val].isalpha():
 				cargo_dict[key] += cargo_map[row][val]
 
+	#Loop through and pull out the numeric instructions of the input.
+	#make each instruction into a list of ints.
 	for move in range(len(moves)):
 		mov_str = moves[move].split(" ")
 		moves[move] = [int(x) for x in mov_str if x.isdigit()]
@@ -29,52 +35,36 @@ def data_load()->list:
 	#!remember.  TOP items are at the start of the lists
 	return cargo_dict, moves
 	
-def calc_part_A(cargo_dict, moves):
+def calc_topcrates(cargo_dict:dict, moves:list, part:str):
 	#Notes
 	#moves[0] = num of cargo to move
 	#moves[1] = where to move it from
 	#moves[2] = where to move it too
 
 	for move in moves:
-		while move[0] > 0:
-			cargo_dict[move[2]].insert(0, cargo_dict[move[1]].pop(0))
-			move[0] -= 1
-
+		if part == 'part_A':
+			while move[0] > 0:
+				cargo_dict[move[2]].insert(0, cargo_dict[move[1]].pop(0))
+				move[0] -= 1
+		if part == 'part_B':
+			containers = cargo_dict[move[1]][:move[0]]
+			del cargo_dict[move[1]][:move[0]]
+			[cargo_dict[move[2]].insert(0, x) for x in containers[::-1]]
+				
 	top_crates = "".join(cargo_dict[key][0] for key in cargo_dict.keys())
 	
 	return top_crates
-
-def calc_part_B(cargo_dict, moves):
-	#Notes
-	#Now our crane can grab multiple crates at once....
-		#So we'll need to change the iteration.  
-		#Take out while loop
-
-	#moves[0] = num of cargo to move
-	#moves[1] = where to move it from
-	#moves[2] = where to move it too
-
-	for move in moves:
-		containers = cargo_dict[move[1]][:move[0]]
-		del cargo_dict[move[1]][:move[0]]
-		[cargo_dict[move[2]].insert(0, x) for x in containers[::-1]]
-
-
-	top_crates = "".join(cargo_dict[key][0] for key in cargo_dict.keys())
-	
-	return top_crates
-
 
 @log_time
 def run_part_A():
 	cargo_map, moves = data_load()
-	top_crates = calc_part_A(cargo_map, moves)
+	top_crates = calc_topcrates(cargo_map, moves, 'part_A')
 	return top_crates
 
 @log_time
 def run_part_B():
 	cargo_map, moves = data_load()
-	top_crates = calc_part_B(cargo_map, moves)
+	top_crates = calc_topcrates(cargo_map, moves, 'part_B')
 	return top_crates
 	
 

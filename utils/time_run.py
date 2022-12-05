@@ -8,11 +8,11 @@ def log_time(fn):
 		took = round(te - tnow, 2)
 		
 		if took <= .000_001:
-			print(f"{fn.__name__} ran in {took*1_000_000_000:.4f} ns")
+			print(f"{fn.__name__} ran in {took*1_000_000_000:.3f} ns")
 		elif took <= .001:
-			print(f"{fn.__name__} ran in {took*1_000_000:.4f} μs")
+			print(f"{fn.__name__} ran in {took*1_000_000:.3f} μs")
 		elif took <= 1:
-			print(f"{fn.__name__} ran in {took*1_000:.4f} ms")
+			print(f"{fn.__name__} ran in {took*1_000:.3f} ms")
 		elif took <= 60:
 			print(f"{fn.__name__} ran in {took:.2f} s")
 		elif took <= 3600:
