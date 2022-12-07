@@ -5,7 +5,7 @@ import os
 import sys
 
 root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.append(root_folder)
+sys.path.append(root_folder) # I am in branch 1
 from utils.time_run import log_time
 
 def data_load()->list:
@@ -13,9 +13,9 @@ def data_load()->list:
 	with open('./day1/data.txt', 'r') as f:
 		data = f.read().splitlines()
 		arr = [int(x) if x != "" else "" for x in data]
-	
+
 	split_arr, curr_row = [], []
-	# Testing a faster cleaner way to do this. Not sure i like the solution i came up with.  Lol. 
+	# Testing a faster cleaner way to do this. Not sure i like the solution i came up with.  Lol.
 	# def split_list_on_space(empty_idx:list, arr:list):
 	# 	for x in range(len(arr)):
 	# 		if x in iter(empty_idx):
@@ -50,6 +50,6 @@ def run_part_B():
 	data = data_load()
 	top3_calories = sorted([sum(x) for x in data])[-3:]
 	return sum(top3_calories)
-	
+
 print(f"Part A solution: \n{run_part_A()}\n")
 print(f"Part B solution: \n{run_part_B()}\n")
