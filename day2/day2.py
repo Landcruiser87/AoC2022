@@ -1,6 +1,7 @@
 #Rock Paper Scissors
 #Day 2
 
+import logging
 import os
 import sys
 
@@ -57,6 +58,7 @@ def ca(arr)->int:
 	p2_score = 0
 	for game in range(len(arr)):
 		outcome = game_dict[player2_dict[arr[game][1]], player1_dict[arr[game][0]]]
+        logging.info(f"outcome: {outcome}")
 		p2_score += shape_score_dict[player2_dict[arr[game][1]]] + outcome_dict[outcome]
 
 	return p2_score
