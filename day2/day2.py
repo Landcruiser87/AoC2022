@@ -48,7 +48,7 @@ def data_load()->list:
 	#Want to load the data as......
 	# list of tuples??? Makes some sense.
 
-def ca(arr)->int:
+def calc_partA(arr)->int:
 	player2_dict = {
 		"X":"rock",
 		"Y":"paper",
@@ -79,9 +79,9 @@ def calc_score_partB(arr)->int:
 	return p2_score
 
 @log_time
-def ra():
+def run_part_A():
 	data = data_load()
-	total_score = ca(data)
+	total_score = calc_partA(data)
 	return total_score
 
 @log_time
@@ -90,7 +90,7 @@ def run_part_B():
 	total_score = calc_score_partB(data)
 	return total_score
 
-print(f"Part A solution: \n{ra()}\n")
+print(f"Part A solution: \n{run_part_A()}\n")
 print(f"Part B solution: \n{run_part_B()}\n")
 
 #Part A Notes
