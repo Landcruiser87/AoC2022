@@ -10,12 +10,12 @@ from utils.time_run import log_time
 
 shape_score_dict = {
 	"rock":1,
-	"paper":2, 
+	"paper":2,
 	"scissors":3
 }
 
 outcome_dict = {
-	"loss":0, 
+	"loss":0,
 	"draw":3,
 	"win":6
 }
@@ -48,19 +48,19 @@ def data_load()->list:
 	#Want to load the data as......
 	# list of tuples??? Makes some sense.
 
-def calc_score_partA(arr)->int:
+def ca(arr)->int:
 	player2_dict = {
 		"X":"rock",
 		"Y":"paper",
 		"Z":"scissors"
 		}
 	p2_score = 0
-	for game in range(len(arr)): 
+	for game in range(len(arr)):
 		outcome = game_dict[player2_dict[arr[game][1]], player1_dict[arr[game][0]]]
 		p2_score += shape_score_dict[player2_dict[arr[game][1]]] + outcome_dict[outcome]
 
 	return p2_score
-	
+
 def calc_score_partB(arr)->int:
 	player2_dict = {
 		"X":"loss",
@@ -69,7 +69,7 @@ def calc_score_partB(arr)->int:
 	}
 
 	p2_score = 0
-	for game in range(len(arr)): 
+	for game in range(len(arr)):
 		outcome = player2_dict[arr[game][1]]
 		player1_play = player1_dict[arr[game][0]]
 		mini_dict = {k:v for k, v in game_dict.items() if v == outcome and k[1] == player1_play}
@@ -79,9 +79,9 @@ def calc_score_partB(arr)->int:
 	return p2_score
 
 @log_time
-def run_part_A():
+def ra():
 	data = data_load()
-	total_score = calc_score_partA(data)
+	total_score = ca(data)
 	return total_score
 
 @log_time
@@ -90,7 +90,7 @@ def run_part_B():
 	total_score = calc_score_partB(data)
 	return total_score
 
-print(f"Part A solution: \n{run_part_A()}\n")
+print(f"Part A solution: \n{ra()}\n")
 print(f"Part B solution: \n{run_part_B()}\n")
 
 #Part A Notes
@@ -99,7 +99,7 @@ print(f"Part B solution: \n{run_part_B()}\n")
 	# (What hand you played + outcome of round (win/loss/draw))
 
 #Gameplan
-	#1. Make a list of tuples. 
+	#1. Make a list of tuples.
 	#2. Iterate said list
 	#3. Calc outcome of game and add to your total tally (point of exercise)
 
