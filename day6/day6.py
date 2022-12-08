@@ -5,7 +5,7 @@ root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__
 sys.path.append(root_folder)
 from utils.time_run import log_time
 
-def data_load()->list:
+def data_load()->str:
 	# ./day6/
 	with open('./day6/data.txt', 'r') as f:
 		data = f.read()
