@@ -1,6 +1,6 @@
 import os
 import sys
-from collections import defaultdict, deque
+from collections import defaultdict
 
 root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(root_folder)
@@ -95,8 +95,8 @@ def run_part_A():
 @log_time
 def run_part_B():
 	size_dict = B_dict
-	dir_to_del = calc_part_B(size_dict)
-	return dir_to_del
+	dir_del_size = calc_part_B(size_dict)
+	return dir_del_size
 
 print(f"Part A solution: \n{run_part_A()}\n")
 print(f"Part B solution: \n{run_part_B()}\n")
