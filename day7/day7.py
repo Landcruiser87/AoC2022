@@ -108,4 +108,10 @@ print(f"Part B solution: \n{run_part_B()}\n")
 
 
 #Part A
-#Determine all the directories with a size above
+#We want to find the directories that are greater than 100_000
+#
+
+#Part B 
+#Given the size limits of the device, 
+#Find the smallest directory that will satisfy the upgrade software limits and
+#hardware limits
