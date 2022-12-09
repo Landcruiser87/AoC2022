@@ -95,16 +95,18 @@ def tree_calculator(grid:np.array, part:str)->int:
 	for x in range(wd):
 		for y in range(ht):
 			if x in outer_ring or y in outer_ring:
-				total_trees += 1
-				continue
-
-			if tree_is_visible(grid, x, y):
-				total_trees += 1
-			
-			tree_score = calc_tree_score(grid, x, y) 
-			if tree_score > high_score:
-				high_score = tree_score
-			
+					total_trees += 1
+					continue
+				
+			if part == 'part_A':
+				if tree_is_visible(grid, x, y):
+					total_trees += 1
+					
+			if part == 'part_B':			
+				tree_score = calc_tree_score(grid, x, y) 
+				if tree_score > high_score:
+					high_score = tree_score
+				
 	if part == 'part_A':
 		return total_trees
 	if part == 'part_B':
