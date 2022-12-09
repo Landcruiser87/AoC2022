@@ -1,3 +1,5 @@
+# AOC Day 8 - Treetop Tree House
+
 import numpy as np
 import os
 import sys

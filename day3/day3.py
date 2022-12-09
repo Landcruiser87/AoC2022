@@ -1,3 +1,5 @@
+# AOC Day 3 - Rucksack Reorganization
+
 import os
 import sys
 import string

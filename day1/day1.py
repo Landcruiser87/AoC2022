@@ -1,5 +1,4 @@
-#Calorie Counting
-#Day 1
+#AOC Day 1 - Calorie Counting
 
 import os
 import sys

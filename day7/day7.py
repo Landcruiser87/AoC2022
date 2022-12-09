@@ -1,3 +1,5 @@
+# AOC Day 7 - No Space Left on Device
+
 import os
 import sys
 from collections import defaultdict

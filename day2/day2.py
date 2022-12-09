@@ -1,5 +1,4 @@
-#Rock Paper Scissors
-#Day 2
+# AOC Day 2 - Rock Paper Scissors
 
 import os
 import sys

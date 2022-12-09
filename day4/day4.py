@@ -1,3 +1,5 @@
+# AOC Day 4 - Camp Cleanup
+
 import os
 import sys
 
