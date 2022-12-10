@@ -158,11 +158,3 @@ print(f"Part B solution: \n{run_part_B()}\n")
 	# or
 	# out of row/col of tail.
 		#-Tail moves diagonally to catch up
-
-
-#We need to find the final position of hte tail i think. 
-
-
-#
-
-#
