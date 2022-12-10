@@ -98,7 +98,7 @@ def calc_part_B(moves):
 	# # # # # # # 
 
 	h_moves = deque(moves)
-	head = tail = (0, 0)
+	tail = (0, 0)
 	tail_seen = set([tail])
 	knot_list = [(0,0) for _ in range(10)]
 
