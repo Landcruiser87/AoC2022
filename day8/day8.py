@@ -23,7 +23,8 @@ def tree_is_visible(grid:list, x:int, y:int)->bool:
 	# Gameplan 
 	#1. Outer tree's are all visible.  So immediately increase the count by the shape of the array. 
 	#2. For a tree to qualify as visible.  It has to be viewable from at least 1 side of the grid. 
-		#Could have just checked with a all()
+		#Could have just checked with all().  oh well. 
+	
 	#grid layout
 	#y---------->
 	
@@ -49,8 +50,6 @@ def tree_is_visible(grid:list, x:int, y:int)->bool:
 
 def calc_tree_score(grid:list, x:int, y:int)->int:
 	#Now we need to calculate the score of each view in each direction. 
-	#From each position, calculate 
-
 	#grid layout
 	#y---------->
 	
@@ -80,13 +79,12 @@ def calc_tree_score(grid:list, x:int, y:int)->int:
 		else:
 			#Now check where the first index that is greater than or equal to the grid.
 			first_idx = np.where(coords >= grid[x,y])[0]
-			if first_idx.size > 0:
-				tree.append(first_idx[0] + 1)
+			tree.append(first_idx[0] + 1)
 
 	return np.prod(tree)
 
 
-def tree_calculator(grid:np.array, part:str)->int:
+def tree_calculator(grid:np.array, part:str):
 	ht = grid.shape[0]
 	wd = grid.shape[1]
 
@@ -97,7 +95,7 @@ def tree_calculator(grid:np.array, part:str)->int:
 			if x in outer_ring or y in outer_ring:
 					total_trees += 1
 					continue
-				
+
 			if part == 'part_A':
 				if tree_is_visible(grid, x, y):
 					total_trees += 1
