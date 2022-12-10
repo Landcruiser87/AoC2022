@@ -31,7 +31,7 @@ def tail_check(head:tuple, tail:tuple)->tuple:
 	dx, dy = (head[0]-tail[0], head[1]-tail[1])
 	#1.  If both dx, dy abs difference is less than 1
 		#return the tail as is.  Doesn't need adjustment
-	if abs(dx) <= 1 and abs(dy) <=1:
+	if abs(dx) <= 1 and abs(dy) <= 1:
 		return (tail[0], tail[1])
 
 	#2.  if deltax > 1 - Move in X direction
@@ -44,7 +44,7 @@ def tail_check(head:tuple, tail:tuple)->tuple:
 
 	#4. if deltax and deltay > 1.  Move in diag
 	elif abs(dx) > 0 and abs(dy) > 0:
-		return (tail[0] + dx // abs(dx) , tail[1] + dy // abs(dy))
+		return (tail[0] + dx // abs(dx), tail[1] + dy // abs(dy))
 
 	#5. All other cases, return zero tuple
 	else:
