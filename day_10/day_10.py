@@ -9,18 +9,16 @@ sys.path.append(root_folder)
 from utils.time_run import log_time
 
 def data_load()->list:
-	# ./day/
+	# ./day10/
 	with open('./day_10/data.txt', 'r') as f:
 		data = f.read().splitlines()
 		arr = [tuple(x.split()) for x in data]
 	return arr
 
 def calc_part_A(data:list):
-
 	register = 1
 	cycle_c = sig_strength = 0
 	sig_marker = list(range(20, 260, 40))
-	sig_marker.append(1000)
 	com_que = deque(data)	
 	
 	while com_que:
@@ -30,15 +28,51 @@ def calc_part_A(data:list):
 		else:	
 			cycle_c += 2
 
-		if any(cycle_c >= x for x in sig_marker):
+		if any(cycle_c >= x for x in sig_marker if sig_marker):
 			sig_strength += sig_marker[0]*register
-			if len(sig_marker) != 1:
-				sig_marker.pop(0)
+			sig_marker.pop(0)
 
 		if command[0] != 'noop':
 			register += int(command[1])
 
 	return sig_strength
+
+def calc_part_B(data:list):
+	#Draws a single pixel per cycle.  
+	#Check to see if the register is in a position of 
+	#a multiple of 40
+
+	register = 1
+	cycle_c = 0
+	com_que = deque(data)
+	sprite = []
+
+
+	while com_que:
+		command = com_que.popleft()
+		if command[0] == 'noop':
+			sprite.append(register)
+			cycle_c += 1
+			
+		else:
+			sprite.extend([register, register])
+			cycle_c += 2
+			register += int(command[1])
+
+
+	for idx, reg in enumerate(sprite):
+		pos = idx % 40
+		
+		if pos in [reg-1, reg, reg+1]:
+
+			print('#', end="")
+		else:
+			print('.', end="")
+
+		if pos == 39:
+			print()
+
+
 
 @log_time
 def run_part_A():
@@ -49,7 +83,8 @@ def run_part_A():
 @log_time
 def run_part_B():
 	data = data_load()
-	
+	calc_part_B(data)
+
 print(f"Part A solution: \n{run_part_A()}\n")
 print(f"Part B solution: \n{run_part_B()}\n")
 
