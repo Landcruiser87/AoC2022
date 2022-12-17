@@ -2,7 +2,7 @@ import os
 import sys
 from collections import defaultdict
 import operator
-
+from math import prod
 
 root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(root_folder)
@@ -18,23 +18,37 @@ def data_load()->list:
 			if "Monkey" in line:
 				monkey = line.lower().strip(":")
 				monkey_book[monkey] = {
-					'monkeybag': [int(x) for x in data[idx + 1].split(":")[1].strip().split(',')],
+					'items': [int(x) for x in data[idx + 1].split(":")[1].strip().split(',')],
 					'ops': data[idx + 2].split("=")[1].strip(),
 					'test':data[idx + 3].split(":")[1].strip(),
 					'True':data[idx + 4].split(":")[1][10:],
 					'False':data[idx + 5].split(":")[1][10:],
 					'insp_cnt': 0
 				}
-	#Possibly do the string adjustments in here. s
-
 	return monkey_book
 
-		#Read data in, 
-		#split on newlines
-		#lower the monkey and make it suitable for a keydict. 
-		#assign dict values as such. 
-		
-def calc_part_A(monkey_book:dict):
+
+operations = {
+	'*': operator.mul,
+	'divisible': operator.truediv,
+	'+': operator.add,
+	'-': operator.sub
+}
+
+def adjust_worry(toss, ops, operations):
+	left, op, right = ops.split()
+
+	#cases for ops
+	if left.isalpha() and right.isalpha():
+		return operations[op](toss, toss)
+
+	elif left.isalpha() and right.isdigit():
+		return operations[op](toss, int(right)) 
+
+	else:
+		raise ValueError(f'Your input is corrupted')
+
+def monkey_mania(monkey_book:dict, rounds:int, part, divid):
 	#Our job here is to count the number of times a monkey inspects something. 
 	#Order of operaions. 
 
@@ -46,39 +60,40 @@ def calc_part_A(monkey_book:dict):
 	#when all monkeys go through their items, its a round
 	#we're going through 20 rounds of this. 
 
-	operations = {
-		'*': operator.mul,
-		'divisible': operator.truediv,
-		'+': operator.add,
-		'-': operator.sub
-	}
+	#For part B, take the modulo of the adjusted worry by the greatest common
+	#denominator of the possible divisors. Which is all the divisors mutiplied
+	#together in a set.
 
-	def adjust_worry(toss, ops, operations):
+	
+	# tst_range = list(range(0, 10_000, 1000))
+	# tst_range.pop(0)
+	# tst_range.insert(0, 20)
+	# tst_range.insert(0, 1)
+	divisor = prod(set([int(monkey_book[x]['test'].split()[2]) for x, y in monkey_book.items()])) 
 
-		left, op, right = ops.split()
-		#Cases for ops
-		if left.isalpha() and right.isalpha():
-			return operations[op](toss, toss) // 3
-
-		elif left.isalpha() and right.isdigit():
-			return operations[op](toss, int(right)) // 3
-		else:
-			raise ValueError(f'Your input is corrupted')
-		
-
-	for round in range(20):
+	for round in range(rounds):
+		# if round in tst_range:
+		# 	print(f'round {round}')
+		# print([monkey_book[x]['insp_cnt'] for x, y in monkey_book.items()])
 		for monkey in monkey_book.keys():
-			for toss in monkey_book[monkey]['monkeybag']:
-				worry_adjust = adjust_worry(toss, monkey_book[monkey]['ops'], operations)
-				if worry_adjust % int(monkey_book[monkey]['test'].split()[2]) == 0:
-					monkey_book[monkey_book[monkey]['True']]['monkeybag'].append(worry_adjust)
-				else:
-					monkey_book[monkey_book[monkey]['False']]['monkeybag'].append(worry_adjust)
+			if len(monkey_book[monkey]['items']) == 0:
+				continue
 
+			while monkey_book[monkey]['items']:
+				toss = monkey_book[monkey]['items'].pop(0)
+				worry_adjust = adjust_worry(toss, monkey_book[monkey]['ops'], operations)
+				if divid == 3:
+					worry_adjust //= divid
+				else:
+					worry_adjust = worry_adjust % divisor
+
+				if worry_adjust % int(monkey_book[monkey]['test'].split()[2]) == 0:
+					monkey_book[monkey_book[monkey]['True']]['items'].append(worry_adjust)
+				else:
+					monkey_book[monkey_book[monkey]['False']]['items'].append(worry_adjust)
 				
 				monkey_book[monkey]['insp_cnt'] += 1
-			monkey_book[monkey]['monkeybag'] = []
-	
+
 	top_two = sorted(monkey_book.items(), key = lambda x: x[1]['insp_cnt'])[-2:]
 	top_two = [top_two[x][1]['insp_cnt'] for x in range(len(top_two))]
 	return operations['*'](top_two[0], top_two[1])
@@ -87,16 +102,20 @@ def calc_part_A(monkey_book:dict):
 @log_time
 def run_part_A():
 	monkey_book = data_load()
-	monkey_biz = calc_part_A(monkey_book)
+	rounds, part = 20, "part_A"
+	monkey_biz = monkey_mania(monkey_book, rounds, part, 3)
 	return monkey_biz
 
 
 @log_time
 def run_part_B():
-	data = data_load()
+	monkey_book = data_load()
+	rounds, part = 10_000, "part_B"
+	monkey_biz = monkey_mania(monkey_book, rounds, part, 1)
+	return monkey_biz
 	
-print(f"Part A solution: \n{run_part_A()}\n")
-# print(f"Part B solution: \n{run_part_B()}\n")
+# print(f"Part A solution: \n{run_part_A()}\n")
+print(f"Part B solution: \n{run_part_B()}\n")
 
 #Part A Notes.  
 
