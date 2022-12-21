@@ -58,22 +58,17 @@ def calc_part_A(data)->int:
 		
 def calc_part_B(pairs)->int:
 	#multiply the indexes of the divider packets
-	#[[2]]
-	#[[6]]
-	inorder =  []
-	for idx in range(len(pairs)):
-		p1, p2 = pairs[idx], pairs[idx + 1]
-		#if comparing the two values is true 
-		#p1 is in order compared to p2
+	div_one = [[2]]
+	div_two = [[6]]
 
-		if compare(p1, p2):
-			if p1 not in inorder:
-				inorder.append(p1)
-		else:
-			if p2 not in inorder:
-				inorder.insert(p2, 0)
+	#compare each index to total list of pairs
+	first_div = sum([1 for x in pairs if compare(x, div_one)])
+	sec_div = sum([1 for x in pairs if compare(x, div_two)])
 
-				
+	return first_div * sec_div
+
+
+
 @log_time
 def run_part_A():
 	data = data_load()
