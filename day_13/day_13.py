@@ -39,10 +39,10 @@ def compare(p1, p2)->bool:
 			return compare(p1, [p2])
 		#both are lists
 		for x, y in zip(p1, p2):
-			mini_ver = compare(x, y)
+			verdict = compare(x, y)
 			
-			if mini_ver != 'gooseggs':
-				return mini_ver
+			if verdict != 'gooseggs':
+				return verdict
 
 		return compare(len(p1), len(p2))
 
@@ -73,13 +73,13 @@ def calc_part_B(pairs)->int:
 
 
 @log_time
-def run_part_A():
+def run_part_A()->int:
 	data = data_load()
 	pair_count = calc_part_A(data)
 	return pair_count	
 
 @log_time
-def run_part_B():
+def run_part_B()->int:
 	data = data_load()
 	data.extend([[[2]], [[6]]])
 	decoder_key = calc_part_B(data)
