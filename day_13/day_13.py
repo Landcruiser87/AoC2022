@@ -61,7 +61,10 @@ def calc_part_B(pairs)->int:
 	div_one = [[2]]
 	div_two = [[6]]
 
-	#compare each index to total list of pairs
+	#compare div_one to each index.  If its greater than that index,
+	#add a 1 to the list, then sum them up to see how far it got into the
+	#list
+
 	first_div = sum([1 for x in pairs if compare(x, div_one)])
 	sec_div = sum([1 for x in pairs if compare(x, div_two)])
 
