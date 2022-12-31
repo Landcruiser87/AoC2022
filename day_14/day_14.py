@@ -79,11 +79,10 @@ def calc_part_A(data:list)-> int:
 					if not onboard(grid, c_row + 1, c_col + x):
 						poursand = False
 						break
-
-			#check to see if diag lower left is availble
 			if not poursand:
 				break
 
+			#check to see if diag lower left is availble
 			if grid[c_row + 1, c_col] == 0:
 				c_row += 1
 
@@ -105,6 +104,99 @@ def calc_part_A(data:list)-> int:
 	return np.where(grid==2)[0].size
 
 
+def calc_part_B(data:list)-> int:
+	#grid layout
+	# # # # # # # 
+	#x---------->
+	#y#
+	#|#
+	#|#
+	#|#
+	#v# # # # # #
+	
+	#first get max/min of each grid
+	max_x = max([max(line, key=lambda x:x[0]) for line in data], key=lambda y: y[0])[0]
+	min_x = min([min(line, key=lambda x:x[0]) for line in data], key=lambda y: y[0])[0]
+	max_y = max([max(line, key=lambda x:x[1]) for line in data], key=lambda y: y[1])[1]
+	min_y = min([min(line, key=lambda x:x[1]) for line in data], key=lambda y: y[1])[1]
+	
+	#Changing the ceiling
+	ht = np.arange(0, max_y + 3)
+
+	#Just gonna add 1000 to each side and see if it works. 
+	wd = np.arange(min_x - 1000, max_x + 1001)
+
+	grid = np.zeros(shape=(ht.size, wd.size), dtype='int')
+
+	#Set the bottom to ones as they're all rocks now. 
+	grid[-1, :] = 1
+
+	start = (0, np.where(wd==500)[0].item())
+
+	#Iterate through the array and assign ones to all the rocks	
+	for line in data:
+
+		x_vals = [wd.tolist().index(x[0]) for x in line]
+		y_vals = [y[1] for y in line]
+		rockpile = deque(zip(x_vals, y_vals))
+
+		while len(rockpile) > 1:
+			c1, r1 = rockpile.popleft()
+			c2, r2 = rockpile[0]
+
+			if c2 < c1:
+				c1, c2 = c2, c1
+			if r2 < r1:
+				r1, r2 = r2, r1
+
+			grid[r1:r2+1, c1:c2+1] = 1
+	
+	poursand = True
+	
+	#Pour the sand
+	while poursand:
+		#isolate first row with a 1 and mark it from the drop.
+		c_row = np.argmax(grid[:, start[1]]) - 1
+		c_col = start[1]
+
+		if grid[0,c_col] == 2:
+			poursand = False
+			return np.where(grid==2)[0].size
+
+		atrest = False
+		while not atrest:
+			for x in [-1, 1]:
+				if not onboard(grid, c_row + 1, c_col + x):
+					poursand = False
+					break
+			if not poursand:
+				break
+
+			#check to see if diag lower left is availble
+			if grid[c_row + 1, c_col] == 0:
+				c_row += 1
+
+			elif grid[c_row + 1, c_col - 1] == 0:
+				c_col -= 1
+				c_row += 1
+
+			#check to see if diag lower right is avaible
+			elif grid[c_row + 1, c_col + 1] == 0:
+				c_col += 1
+				c_row += 1
+
+			else:
+				atrest = True
+
+		if poursand:
+			grid[c_row, c_col] = 2
+
+	# if np.where(grid==2).size == 22:
+	# 	pass
+
+	return np.where(grid==2)[0].size
+
+
 @log_time
 def run_part_A():
 	data = data_load() 
@@ -115,6 +207,8 @@ def run_part_A():
 @log_time
 def run_part_B():
 	data = data_load()
+	num_grains = calc_part_B(data)
+	return num_grains
 	
 print(f"Part A solution: \n{run_part_A()}\n")
 print(f"Part B solution: \n{run_part_B()}\n")
