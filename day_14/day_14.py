@@ -143,7 +143,8 @@ def calc_part_B(data:list)-> int:
 		while len(rockpile) > 1:
 			c1, r1 = rockpile.popleft()
 			c2, r2 = rockpile[0]
-
+			
+			#TODO change this to abs diff
 			if c2 < c1:
 				c1, c2 = c2, c1
 			if r2 < r1:
