@@ -2,8 +2,6 @@
 
 import os
 import sys
-import numpy as np
-
 
 root_folder = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(root_folder)
@@ -26,26 +24,14 @@ def manhattan(p1:tuple, p2:tuple)->int:
 
 def calc_part_A(sensors:list, beacons:list)->int:
 
-	# EVAL_Y = 2_000_000
-	EVAL_Y = 10
+	EVAL_Y = 2_000_000
+	# EVAL_Y = 10
 
-	#Gameplan
-	#Calculate the manhattan dist from sensor to beacon.
-	#Generate a range up, down left right at that distance to beacon.
-	#Calculate the manhattan dist for each point in that block range.
-		#If the m_dist is less than the m_dist, add it to to the 
-		#blocked set list.  
-	
 	#Iterate the sensor beacon pairs. 
 	blocked, test = set(), set()
 	for sensor, beacon in zip(sensors, beacons):
 		#Calculate the manhattan distance
 		dist_beacon = manhattan(sensor, beacon)
-
-		#Generate x and y ranges that extend out NSEW the range of dist_beacon
-		# dirs = [range(sensor[0] - dist_beacon, sensor[0] + dist_beacon),
-		# 		range(sensor[1] - dist_beacon, sensor[1] + dist_beacon)	
-		# 	 ]
 
 		#Examine the difference between the sensors y (row) and EVAL_Y
 		y_diff = abs(sensor[1] - EVAL_Y)
@@ -64,17 +50,6 @@ def calc_part_A(sensors:list, beacons:list)->int:
 			scan = dist_beacon - y_diff
 			for x in range(sensor[0] - scan, sensor[0] + scan + 1):
 				blocked.add((x, EVAL_Y))
-		
-		#Iterate each cell in the dirs block to test if the manhattan distance
-		#is less than or equal to dist_beacon
-		# for row in dirs[0]:
-		# 	for col in dirs[1]:
-		# 		if manhattan(sensor, (row, col)) <= dist_beacon:
-		# 			blocked.add((row, col))
-		# 			# if sensor == (8, 7):
-		# 			# 	test.add((row, col))
-
-		# 		# print(row, '\t', col)
 
 	#remove the sensor locations in blocked for a valid count via set membership test
 	return len(blocked - set(beacons))
@@ -85,10 +60,8 @@ def calc_part_B(sensors:list, beacons:list)->int:
 	# EVAL_HIGH = 20
 	EVAL_HIGH = 4_000_000
 
-	blocked, all_pts = set(), set()
-	
 	for eval_y in range(EVAL_LOW, EVAL_HIGH + 1):
-
+		blocked = []
 		#Iterate the sensor beacon pairs. 
 		for sensor, beacon in zip(sensors, beacons):
 			#Calculate the manhattan distance
@@ -97,15 +70,22 @@ def calc_part_B(sensors:list, beacons:list)->int:
 			#Examine the difference between the sensors y (row) and EVAL_Y
 			y_diff = abs(sensor[1] - eval_y)
 
-			if y_diff <= dist_beacon:
-					scan = dist_beacon - y_diff
-					for x in range(sensor[0] - scan, sensor[0] + scan + 1):
-						blocked.add((x, eval_y))
-	
-	[[all_pts.add((x, y)) for x in range(EVAL_LOW, EVAL_HIGH + 1)] for y in range(EVAL_LOW, EVAL_HIGH + 1)]
-	distress = list(all_pts - blocked)[0]
-	
-	return distress[0]*4_000_000 + distress[1]
+			#Now find the x component of that difference in sensors. 
+			xscan = dist_beacon - y_diff
+
+			# If its greater/= zero, add the range to the blocked list
+			if xscan >= 0:
+				blocked.append((sensor[0] - xscan, sensor[0] + xscan))
+
+		blocked.sort()
+		t_rng = blocked[0]
+		for idx in range(1, len(blocked)):
+			if blocked[idx][0] <= t_rng[1]:
+				print("position", (t_rng[1], eval_y))
+				t_rng = (t_rng[0], max(t_rng[1], blocked[idx][1]))
+			else:
+				return (t_rng[1] + 1)*4_000_000 + eval_y
+			
 
 @log_time
 def run_part_A():
@@ -119,5 +99,5 @@ def run_part_B():
 	tuning_freq = calc_part_B(sensors, beacons)
 	return tuning_freq
 
-# print(f"Part A solution: \n{run_part_A()}\n")
+print(f"Part A solution: \n{run_part_A()}\n")
 print(f"Part B solution: \n{run_part_B()}\n")
